@@ -1,0 +1,5 @@
+[window]
+res=[500, 500]
+fullscreen=false
+borderless=true
+resizable=true
