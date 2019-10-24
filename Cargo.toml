@@ -1,5 +1,5 @@
 [package]
-name = "arcade"
+name = "rs-arcade"
 version = "0.1.0"
 authors = ["Arden Rasmussen <ardenisthebest@gmail.com>"]
 edition = "2018"
