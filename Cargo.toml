@@ -9,4 +9,5 @@ edition = "2018"
 [dependencies]
 ggez="*"
 serde = { version = "*", features = ["derive"] }
-toml = "*"
+serde_json="*"
+derive_builder="*"

@@ -20,16 +20,28 @@ impl Config {
         self.source_file = Some(file);
     }
     pub fn write(&mut self) -> Result<(), std::io::Error> {
-        println!("{:?}", self);
-        println!("{:?}", &*self);
-        let config_str = toml::to_string(&*self).expect("Failed to serialize config");
+        let config_str = serde_json::to_string(&*self).unwrap();
         fs::write(&self.source_file.as_ref().unwrap(), config_str)
     }
 }
 
 pub fn load(file: &str) -> Config {
-    let contents = fs::read_to_string(file).expect("error while reading file");
-    let mut config: Config = toml::from_str(&contents).expect("error while parsing toml");
-    config.set_source(file.to_string());
-    return config;
+    match fs::read_to_string(file) {
+        Ok(v) => {
+            let mut config: Config = serde_json::from_str(&v).expect("error while parsing json");
+            config.set_source(file.to_string());
+            return config;
+        }
+        Err(_) => {
+            return Config {
+                window: WindowSettings {
+                    res: vec![500.0, 500.0],
+                    fullscreen: Some(false),
+                    borderless: Some(true),
+                    resizable: Some(true),
+                },
+                source_file: Some(file.to_string()),
+            };
+        }
+    }
 }
